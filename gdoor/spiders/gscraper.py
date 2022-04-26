@@ -4,11 +4,12 @@ import scrapy
 class GscraperSpider(scrapy.Spider):
     name = 'gscraper'
     def start_requests(self):
-        yield scrapy.Request(
-    # url="https://www.glassdoor.com/Reviews/Amazon-Reviews-E6036_P4.htm?filter.iso3Language=eng", 
-    url = "https://www.glassdoor.com/Reviews/Amazon-Reviews-E6036_P4.htm?filter.iso3Language=eng",
-    callback=self.parse, 
-    meta={'proxy': 'http://scraperapi:585cda17b211198d6fdfacf5b4f225e7@proxy-server.scraperapi.com:8001'}
+        for i in range(1,1000):
+            yield scrapy.Request(
+        # url="https://www.glassdoor.com/Reviews/Amazon-Reviews-E6036_P4.htm?filter.iso3Language=eng", 
+            url = f"https://www.glassdoor.com/Reviews/Amazon-Reviews-E6036_P{i}.htm?filter.iso3Language=eng",
+            callback=self.parse, 
+            meta={'proxy': 'http://scraperapi:585cda17b211198d6fdfacf5b4f225e7@proxy-server.scraperapi.com:8001'}
 )
 
     def parse(self, response):
