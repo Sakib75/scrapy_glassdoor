@@ -15,12 +15,12 @@ class GscraperSpider(scrapy.Spider):
             base_url = base_url.replace("https://www.glassdoor.com/","https://www.glassdoor.ca/")
             # yield scrapy.Request(url=base_url + '.htm?filter.iso3Language=eng', meta={'com_name':com_name,'symbol':symbol,'proxy': 'http://scraperapi:ef5ce54b6e77c240354ac4f5efdd3cc1@proxy-server.scraperapi.com:8001'},)
             yield scrapy.Request(url=base_url + '.htm?filter.iso3Language=eng', meta={'proxy': 'http://scraperapi:ef5ce54b6e77c240354ac4f5efdd3cc1@proxy-server.scraperapi.com:8001'},)
-        for i in range(1,1000):
-            yield scrapy.Request(
-        # url="https://www.glassdoor.com/Reviews/Amazon-Reviews-E6036_P4.htm?filter.iso3Language=eng", 
-            url = f"https://www.glassdoor.com/Reviews/Amazon-Reviews-E6036.htm?filter.iso3Language=eng",
-            callback=self.parse, 
-            meta={'proxy': 'http://scraperapi:ef5ce54b6e77c240354ac4f5efdd3cc1@proxy-server.scraperapi.com:8001'}
+        # for i in range(1,1000):
+        #     yield scrapy.Request(
+        # # url="https://www.glassdoor.com/Reviews/Amazon-Reviews-E6036_P4.htm?filter.iso3Language=eng", 
+        #     url = f"https://www.glassdoor.com/Reviews/Amazon-Reviews-E6036.htm?filter.iso3Language=eng",
+        #     callback=self.parse, 
+        #     meta={'proxy': 'http://scraperapi:ef5ce54b6e77c240354ac4f5efdd3cc1@proxy-server.scraperapi.com:8001'})
 
         # yield scrapy.Request(url="https://www.glassdoor.com/Reviews/Amazon-Reviews-E6036.htm?filter.iso3Language=eng", callback=self.parse_ratings)
 
