@@ -6,20 +6,20 @@ class GscraperSpider(scrapy.Spider):
     renames = {'company_name': 'company', 'reviewId': 'review_id','ratingOverall':'review_rating_all','ratingWorkLifeBalance':'review_rating_worklife','ratingCultureAndValues':'review_rating_culture','ratingCareerOpportunities':'review_rating_career','ratingDiversityAndInclusion':'review_rating_diversity','ratingCompensationAndBenefits':'review_rating_comp','ratingSeniorLeadership':'review_rating_senior','jobTitle':'job_title','summary':'review_title','reviewDateTime':'review_info_date'}
     columns = ['company',	'symbol',	'name_glassdoor','review_id',	'review_rating_all',	'review_rating_worklife',	'review_rating_culture',	'review_rating_career',	'review_rating_diversity',	'review_rating_comp',	'review_rating_senior',	'employee_info'	,'review_title',	'review_info',	'pros',	'cons',	'advice','total_reviews','url',	]
     def start_requests(self):
-        df_input = pd.read_csv('input/input.csv')
-        for i in range(0,len(df_input)):
-            com_name = df_input.loc[i,'company']
-            symbol = df_input.loc[i,'symbol']
-            base_url = df_input.loc[i,'url']
-            base_url =  ".".join(base_url.replace('/Overview/','/Reviews/').replace('/Working-at-','/').replace('-EI_','-Reviews-').replace('-Reviews-IE','-Reviews-E').split('.')[:-2])
-            base_url = base_url.replace("https://www.glassdoor.com/","https://www.glassdoor.ca/")
-            yield scrapy.Request(url=base_url + '.htm?filter.iso3Language=eng', meta={'com_name':com_name,'symbol':symbol,'proxy': 'http://scraperapi:ef5ce54b6e77c240354ac4f5efdd3cc1@proxy-server.scraperapi.com:8001'},)
-        # for i in range(1,1000):
-        #     yield scrapy.Request(
-        # # url="https://www.glassdoor.com/Reviews/Amazon-Reviews-E6036_P4.htm?filter.iso3Language=eng", 
-        #     url = f"https://www.glassdoor.com/Reviews/Amazon-Reviews-E6036.htm?filter.iso3Language=eng",
-        #     callback=self.parse, 
-            # meta={'proxy': 'http://scraperapi:ef5ce54b6e77c240354ac4f5efdd3cc1@proxy-server.scraperapi.com:8001'}
+        # df_input = pd.read_csv('input/input.csv')
+        # for i in range(0,len(df_input)):
+        #     com_name = df_input.loc[i,'company']
+        #     symbol = df_input.loc[i,'symbol']
+        #     base_url = df_input.loc[i,'url']
+        #     base_url =  ".".join(base_url.replace('/Overview/','/Reviews/').replace('/Working-at-','/').replace('-EI_','-Reviews-').replace('-Reviews-IE','-Reviews-E').split('.')[:-2])
+        #     base_url = base_url.replace("https://www.glassdoor.com/","https://www.glassdoor.ca/")
+        #     yield scrapy.Request(url=base_url + '.htm?filter.iso3Language=eng', meta={'com_name':com_name,'symbol':symbol,'proxy': 'http://scraperapi:ef5ce54b6e77c240354ac4f5efdd3cc1@proxy-server.scraperapi.com:8001'},)
+        for i in range(1,1000):
+            yield scrapy.Request(
+        # url="https://www.glassdoor.com/Reviews/Amazon-Reviews-E6036_P4.htm?filter.iso3Language=eng", 
+            url = f"https://www.glassdoor.com/Reviews/Amazon-Reviews-E6036.htm?filter.iso3Language=eng",
+            callback=self.parse, 
+            meta={'proxy': 'http://scraperapi:ef5ce54b6e77c240354ac4f5efdd3cc1@proxy-server.scraperapi.com:8001'})
 
         # yield scrapy.Request(url="https://www.glassdoor.com/Reviews/Amazon-Reviews-E6036.htm?filter.iso3Language=eng", callback=self.parse_ratings)
 
