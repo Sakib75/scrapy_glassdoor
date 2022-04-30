@@ -12,14 +12,14 @@ class GscraperSpider(scrapy.Spider):
             symbol = df_input.loc[i,'symbol']
             base_url = df_input.loc[i,'url']
             base_url =  ".".join(base_url.replace('/Overview/','/Reviews/').replace('/Working-at-','/').replace('-EI_','-Reviews-').replace('-Reviews-IE','-Reviews-E').split('.')[:-2])
-            yield scrapy.Request(url=base_url + '.htm?filter.iso3Language=eng', meta={'com_name':com_name,'symbol':symbol})
+            base_url = base_url.replace("https://www.glassdoor.com/","https://www.glassdoor.ca/")
+            yield scrapy.Request(url=base_url + '.htm?filter.iso3Language=eng', meta={'com_name':com_name,'symbol':symbol,'proxy': 'http://scraperapi:ef5ce54b6e77c240354ac4f5efdd3cc1@proxy-server.scraperapi.com:8001'},)
         # for i in range(1,1000):
         #     yield scrapy.Request(
         # # url="https://www.glassdoor.com/Reviews/Amazon-Reviews-E6036_P4.htm?filter.iso3Language=eng", 
         #     url = f"https://www.glassdoor.com/Reviews/Amazon-Reviews-E6036.htm?filter.iso3Language=eng",
         #     callback=self.parse, 
-        #     # meta={'proxy': 'http://scraperapi:585cda17b211198d6fdfacf5b4f225e7@proxy-server.scraperapi.com:8001'
-        #     }
+            # meta={'proxy': 'http://scraperapi:ef5ce54b6e77c240354ac4f5efdd3cc1@proxy-server.scraperapi.com:8001'}
 
         # yield scrapy.Request(url="https://www.glassdoor.com/Reviews/Amazon-Reviews-E6036.htm?filter.iso3Language=eng", callback=self.parse_ratings)
 
@@ -37,7 +37,7 @@ class GscraperSpider(scrapy.Spider):
             else:
                 dont_filter = False
             url = response.request.url.split('.htm?filter.iso3Language=eng')[0] + f'_P{i}.htm?filter.iso3Language=eng'
-            yield scrapy.Request(url=url, callback=self.parse_ratings, meta={'total_reviews':total_page_no, 'com_name': response.request.meta['com_name'],'symbol': response.request.meta['symbol']}, dont_filter=dont_filter)
+            yield scrapy.Request(url=url, callback=self.parse_ratings, meta={'total_reviews':total_page_no, 'com_name': response.request.meta['com_name'],'symbol': response.request.meta['symbol'],'proxy': 'http://scraperapi:ef5ce54b6e77c240354ac4f5efdd3cc1@proxy-server.scraperapi.com:8001'}, dont_filter=dont_filter,)
 
     def parse_ratings(self, response):
         script = response.xpath("//article/script").get()
